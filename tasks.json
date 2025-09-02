@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "description": "Buy milk",
+    "status": "todo",
+    "createdAt": "September 02, 2025, 05:40 PM",
+    "updatedAt": "September 02, 2025, 05:40 PM"
+  },
+  {
+    "id": 2,
+    "description": "Kill the mosquito",
+    "status": "todo",
+    "createdAt": "September 02, 2025, 05:41 PM",
+    "updatedAt": "September 02, 2025, 05:41 PM"
+  }
+]
