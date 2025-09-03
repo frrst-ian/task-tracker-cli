@@ -51,7 +51,7 @@ def list_tasks(status):
     tasks = load_tasks()
 
     if len(tasks) == 0:
-        print("No task at the moment")
+        print("No task to lsit")
 
     if len(status) == 0 or status == "all":
         print("Tasks: \n")
@@ -81,6 +81,30 @@ def print_tasks(tasks, display_title):
         print()
 
 
+def delete_task(task_id):
+    tasks = load_tasks()
+
+    if len(tasks) == 0:
+        print("No task delete")
+
+    task = find_tasks(tasks, task_id)
+    if task == "not found":
+        print("Task not found")
+        sys.exit(1)
+
+    tasks.remove(task)
+
+    save_tasks(tasks)
+    print(f"Task deleted (ID: {task_id})")
+
+
+def find_tasks(tasks, task_id):
+    for task in tasks:
+        if (task["id"] == task_id):
+            return task
+    return "not found"
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python task_cli.py <command> [args]")
@@ -90,7 +114,7 @@ if __name__ == "__main__":
 
     if command == "add":
         if len(sys.argv) < 3:
-            print("Usage: python task_cli.py add [args]")
+            print("Usage: python task_cli.py add <task description>")
             sys.exit(1)
         desc = sys.argv[2]
         add_task(desc)
@@ -104,6 +128,13 @@ if __name__ == "__main__":
             else:
                 print("Usage: python task_cli list <optional: done, todo, doing>")
                 sys.exit(1)
+    elif command == "delete":
+        if len(sys.argv) < 3:
+            print("Usage: python task_cli.py delete <task id>")
+            sys.exit(1)
+        task_id = sys.argv[2]
+        task_int_id = int(task_id)
+        delete_task(task_int_id)
 
     else:
         print(f"Unknown command: {command}")

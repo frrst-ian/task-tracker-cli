@@ -19,19 +19,5 @@
     "status": "done",
     "createdAt": "September 02, 2025, 06:34 PM",
     "updatedAt": "September 02, 2025, 06:34 PM"
-  },
-  {
-    "id": 4,
-    "description": "Code my startup",
-    "status": "doing",
-    "createdAt": "September 02, 2025, 06:34 PM",
-    "updatedAt": "September 02, 2025, 06:34 PM"
-  },
-  {
-    "id": 5,
-    "description": "Sleep",
-    "status": "doing",
-    "createdAt": "September 03, 2025, 02:45 PM",
-    "updatedAt": "September 03, 2025, 02:45 PM"
   }
 ]
