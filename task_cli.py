@@ -53,31 +53,32 @@ def list_tasks(status):
     if len(tasks) == 0:
         print("No task at the moment")
 
-    if len(status) == 0:
+    if len(status) == 0 or status == "all":
         print("Tasks: \n")
         for task in tasks:
             [print(f"{key}: {value}") for key, value in task.items()]
             print()
     elif status == "todo":
-        print("Todo: \n")
-        todo_tasks = [task for task in tasks if task["status"] == "todo"]
-        for todo_task in todo_tasks:
-            [print(f"{key}: {value}") for key, value in todo_task.items()]
-            print()
+        task = [task for task in tasks if task["status"] == "todo"]
+        print_tasks(task, "\nTodo: \n")
     elif status == "done":
-        print("Finished: \n")
-        done_tasks = [task for task in tasks if task["status"] == "done"]
-        for done_task in done_tasks:
-            [print(f"{key}: {value}") for key, value in done_task.items()]
-            print()
+        task = [task for task in tasks if task["status"] == "done"]
+        print_tasks(task, "\nFinished: \n")
     elif status == "doing":
-        print("In Progress: \n")
         in_progress_tasks = [
             task for task in tasks if task["status"] == "doing"]
-        for in_progress_task in in_progress_tasks:
-            [print(f"{key}: {value}")
-             for key, value in in_progress_task.items()]
-            print()
+        print_tasks(in_progress_tasks, "\nIn progress: \n")
+
+    else:
+        print("Invalid Status")
+        sys.exit(1)
+
+
+def print_tasks(tasks, display_title):
+    print(display_title)
+    for task in tasks:
+        [print(f"{key}: {value}") for key, value in task.items()]
+        print()
 
 
 if __name__ == "__main__":
@@ -94,14 +95,15 @@ if __name__ == "__main__":
         desc = sys.argv[2]
         add_task(desc)
     elif command == "list":
-        status = sys.argv[2]
-        if len(sys.argv) == 2:
-            list_tasks(status="")
-        elif status == "todo" or "done" or "doing":
-            list_tasks(status)
+        if len(sys.argv) < 3:
+            list_tasks("")
         else:
-            print("Usage: python task_cli list <optional: done, todo, doing>")
-            sys.exit(1)
+            status = sys.argv[2]
+            if status == "todo" or status == "done" or status == "doing":
+                list_tasks(status)
+            else:
+                print("Usage: python task_cli list <optional: done, todo, doing>")
+                sys.exit(1)
 
     else:
         print(f"Unknown command: {command}")
