@@ -85,12 +85,12 @@ def delete_task(task_id):
     tasks = load_tasks()
 
     if len(tasks) == 0:
-        print("No task delete")
+        print("No task to delete")
 
-    task = find_tasks(tasks, task_id)
+    task = find_task(tasks, task_id)
     if task == "not found":
         print("Task not found")
-        sys.exit(1)
+        return
 
     tasks.remove(task)
 
@@ -98,7 +98,28 @@ def delete_task(task_id):
     print(f"Task deleted (ID: {task_id})")
 
 
-def find_tasks(tasks, task_id):
+def update_task(task_id, description):
+    tasks = load_tasks()
+    task = find_task(tasks, task_id)
+
+    if not tasks:
+        print("No tasks to update")
+        return
+
+    if task == "not found":
+        print("Task not found")
+        return
+
+    updatedAt = datetime.datetime.now().strftime("%B %d, %Y, %I:%M %p")
+
+    task["description"] = description
+    task["updatedAt"] = updatedAt
+
+    save_tasks(tasks)
+    print(f"Task updated (ID: {task_id})")
+
+
+def find_task(tasks, task_id):
     for task in tasks:
         if (task["id"] == task_id):
             return task
@@ -132,9 +153,15 @@ if __name__ == "__main__":
         if len(sys.argv) < 3:
             print("Usage: python task_cli.py delete <task id>")
             sys.exit(1)
-        task_id = sys.argv[2]
-        task_int_id = int(task_id)
-        delete_task(task_int_id)
+        task_id = int(sys.argv[2])
+        delete_task(task_id)
+    elif command == "update":
+        if len(sys.argv) < 3:
+            print("Usage: python task_cli.py update <task id> <description>")
+            sys.exit(1)
+        task_id = int(sys.argv[2])
+        description = (sys.argv[3])
+        update_task(task_id, description)
 
     else:
         print(f"Unknown command: {command}")
