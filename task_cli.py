@@ -36,7 +36,7 @@ def add_task(desc):
     new_task = {
         "id": new_id,
         "description": desc,
-        "status": "doing",
+        "status": "todo",
         "createdAt": formatted_now,
         "updatedAt": formatted_now
     }
@@ -47,31 +47,30 @@ def add_task(desc):
     print(f"Task added successfully (ID: {new_id})")
 
 
-def list_tasks(status):
+def list_tasks(status=""):
     tasks = load_tasks()
 
-    if len(tasks) == 0:
-        print("No task to lsit")
+    if not tasks:
+        print("No tasks to list")
+        return 
 
-    if len(status) == 0 or status == "all":
+    status = status.lower()
+
+    if status in ("", "all"):
         print("Tasks: \n")
         for task in tasks:
             [print(f"{key}: {value}") for key, value in task.items()]
             print()
-    elif status == "todo":
-        task = [task for task in tasks if task["status"] == "todo"]
-        print_tasks(task, "\nTodo: \n")
-    elif status == "done":
-        task = [task for task in tasks if task["status"] == "done"]
-        print_tasks(task, "\nFinished: \n")
-    elif status == "doing":
-        in_progress_tasks = [
-            task for task in tasks if task["status"] == "doing"]
-        print_tasks(in_progress_tasks, "\nIn progress: \n")
-
+    elif status in ("todo", "doing", "done"):
+        filtered_tasks = [task for task in tasks if task["status"] == status]
+        title = {
+            "todo": "\nTodo: \n",
+            "doing": "\nIn progress: \n",
+            "done": "\nFinished: \n"
+        }[status]
+        print_tasks(filtered_tasks, title)
     else:
-        print("Invalid Status")
-        sys.exit(1)
+        print(f"Invalid status filter: {status}. Use 'todo', 'doing', 'done', or 'all'.")
 
 
 def print_tasks(tasks, display_title):
@@ -86,11 +85,12 @@ def delete_task(task_id):
 
     if len(tasks) == 0:
         print("No task to delete")
+        sys.exit(1)
 
     task = find_task(tasks, task_id)
     if task == "not found":
         print("Task not found")
-        return
+        sys.exit(1)
 
     tasks.remove(task)
 
@@ -104,11 +104,11 @@ def update_task(task_id, description):
 
     if not tasks:
         print("No tasks to update")
-        return
+        sys.exit(1)
 
     if task == "not found":
         print("Task not found")
-        return
+        sys.exit(1)
 
     updatedAt = datetime.datetime.now().strftime("%B %d, %Y, %I:%M %p")
 
@@ -117,6 +117,27 @@ def update_task(task_id, description):
 
     save_tasks(tasks)
     print(f"Task updated (ID: {task_id})")
+
+
+def mark_task(task_id, status):
+    tasks = load_tasks()
+
+    if len(tasks) == 0:
+        print("No task to mark")
+        sys.exit(1)
+
+    task = find_task(tasks, task_id)
+    if task == "not found":
+        print("Task not found")
+        sys.exit(1)
+
+    updatedAt = datetime.datetime.now().strftime("%B %d, %Y, %I:%M %p")
+
+    task["updatedAt"] = updatedAt
+    task["status"] = status
+
+    save_tasks(tasks)
+    print(f"Task {status} (ID: {task_id})")
 
 
 def find_task(tasks, task_id):
@@ -149,19 +170,35 @@ if __name__ == "__main__":
             else:
                 print("Usage: python task_cli list <optional: done, todo, doing>")
                 sys.exit(1)
+
     elif command == "delete":
         if len(sys.argv) < 3:
             print("Usage: python task_cli.py delete <task id>")
             sys.exit(1)
+
         task_id = int(sys.argv[2])
         delete_task(task_id)
     elif command == "update":
-        if len(sys.argv) < 3:
+        if len(sys.argv) < 4:
             print("Usage: python task_cli.py update <task id> <description>")
             sys.exit(1)
         task_id = int(sys.argv[2])
-        description = (sys.argv[3])
+        description = " ".join(sys.argv[3:])
         update_task(task_id, description)
+    elif command == "mark-in-progress":
+        if len(sys.argv) < 3:
+            print("Usage: python task_cli.py mark-in-progress <task id>")
+            sys.exit(1)
+
+        task_id = int(sys.argv[2])
+        mark_task(task_id, "doing")
+    elif command == "mark-done":
+        if len(sys.argv) < 3:
+            print("Usage: python task_cli.py mark-done <task id>")
+            sys.exit(1)
+
+        task_id = int(sys.argv[2])
+        mark_task(task_id, "done")
 
     else:
         print(f"Unknown command: {command}")

@@ -1,23 +1,30 @@
 [
   {
     "id": 1,
-    "description": "Buy milk",
+    "description": "Quit comsci",
     "status": "todo",
-    "createdAt": "September 02, 2025, 05:40 PM",
-    "updatedAt": "September 02, 2025, 05:40 PM"
+    "createdAt": "September 08, 2025, 07:10 PM",
+    "updatedAt": "September 08, 2025, 07:10 PM"
   },
   {
     "id": 2,
-    "description": "Kill the mosquito",
+    "description": "Drop major subjects",
     "status": "todo",
-    "createdAt": "September 02, 2025, 05:41 PM",
-    "updatedAt": "September 02, 2025, 05:41 PM"
+    "createdAt": "September 08, 2025, 07:10 PM",
+    "updatedAt": "September 08, 2025, 07:10 PM"
   },
   {
     "id": 3,
-    "description": "cook",
+    "description": "Cry when bug occurs",
     "status": "done",
-    "createdAt": "September 02, 2025, 06:34 PM",
-    "updatedAt": "September 08, 2025, 06:43 PM"
+    "createdAt": "September 08, 2025, 07:10 PM",
+    "updatedAt": "September 08, 2025, 07:11 PM"
+  },
+  {
+    "id": 4,
+    "description": "Die when bug can't be fixed",
+    "status": "todo",
+    "createdAt": "September 08, 2025, 07:10 PM",
+    "updatedAt": "September 08, 2025, 07:10 PM"
   }
 ]
