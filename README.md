@@ -1,73 +1,52 @@
-# Task Tracker CLI 📝
+# Task Tracker CLI
 
-# Overview
+A command-line task management tool built with Python for efficient task tracking and organization.
 
-The Task Tracker CLI is a simple command-line tool to manage your tasks efficiently. It allows you to add, update, delete, mark, and list tasks with ease, storing all data in a local JSON file. Perfect for practicing filesystem operations, CLI design, and Python scripting.
+[![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Roadmap.sh](https://img.shields.io/badge/Roadmap.sh-Project-orange.svg)](https://roadmap.sh/projects/task-tracker)
 
-# Features
+## Features
 
-Add tasks with a description.
+- Add, update, and delete tasks
+- Mark tasks as in-progress or completed
+- List tasks with status filtering
+- Local JSON storage
+- Comprehensive error handling
 
-Update task descriptions.
+## Installation
 
-Delete tasks by ID.
+```bash
+git clone https://github.com/yourusername/task-tracker-cli.git
+cd task-tracker-cli
+```
 
-Mark tasks as in-progress or done.
+Requires Python 3.x (no external dependencies).
 
-List tasks: all, by status (todo, in-progress, done), or incomplete (not-done).
+## Usage
 
-Tasks include metadata: id, description, status, createdAt, updatedAt.
+```bash
+# Add tasks
+python task_cli.py add "Buy groceries"
 
-# Usage
+# Update tasks
+python task_cli.py update 1 "Buy groceries and cook dinner"
 
-Run the CLI from the terminal:
+# Mark status
+python task_cli.py mark-in-progress 1
+python task_cli.py mark-done 1
 
-## Adding a task
-python task_cli.py add "Buy groceries"  
+# List tasks
+python task_cli.py list                # All tasks
+python task_cli.py list todo          # Filter by status
+python task_cli.py list not-done      # Incomplete tasks
 
-## Updating a task
-python task_cli.py update 1 "Buy groceries and cook dinner"  
+# Delete tasks
+python task_cli.py delete 1
+```
 
-## Deleting a task
-python task_cli.py delete 1  
+## Task Structure
 
-## Marking a task
-python task_cli.py mark-in-progress 1  
-python task_cli.py mark-done 1  
-
-## Listing tasks
-python task_cli.py list
-python task_cli.py list todo
-python task_cli.py list in-progress
-python task_cli.py list done
-python task_cli.py list not-done
-
-# Task Structure
-
-Each task is stored in tasks.json and has the following properties:
-
-- id: Unique identifier
-
-- description: Task description
-
-- status: todo, in-progress, or done
-
-- createdAt: Timestamp of creation
-
-- updatedAt: Timestamp of last update
-
-- Requirements
-
-Python 3.x
-
-No external libraries required
-
-Runs entirely in the terminal
-
-## Notes
-
-Tasks are saved in tasks.json in the current directory.
-
-Invalid inputs are handled gracefully with informative messages ⚠️.
-
-Designed for simplicity and productivity.
+Tasks are stored in `tasks.json` with the following properties:
+- `id`: Unique identifier
+- `description`: Task description
